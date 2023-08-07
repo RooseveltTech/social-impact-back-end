@@ -190,6 +190,9 @@ CORS_ALLOW_ALL_ORIGINS = True
 #     'x-requested-with',
 # ]
 
+IPINFO_TOKEN = config("IPINFO_TOKEN")
+AQI_TOKEN = config("AQI_TOKEN")
+
 cloudinary.config( 
   cloud_name = config("CLOUDINARY_CLOUD_NAME"),
   api_key = config("CLOUDINARY_API_KEY"),

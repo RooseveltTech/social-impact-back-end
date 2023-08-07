@@ -1,3 +1,4 @@
+from django.conf import settings
 import requests
 
 class AirQuality:
@@ -5,9 +6,9 @@ class AirQuality:
     @classmethod
     def get_quality_data(cls, city=None):
         if city is None:
-            url = "http://api.waqi.info/feed/here/?token=fb6107dda11d7fe319f54e9a2924f0f551e5dbfc"
+            url = f"http://api.waqi.info/feed/here/?token={settings.AQI_TOKEN}"
         else:
-            url = f"http://api.waqi.info/feed/{city}/?token=fb6107dda11d7fe319f54e9a2924f0f551e5dbfc"
+            url = f"http://api.waqi.info/feed/{city}/?token={settings.AQI_TOKEN}"
         headers = {
             "Content-Type": "application/json",
         }
@@ -32,7 +33,7 @@ class AirQuality:
     @classmethod
     def get_city(cls, ip_addr):
         """Handle HTTP GET request."""
-        url = f"https://ipinfo.io/{ip_addr}?token=27ef33152cacc4"
+        url = f"https://ipinfo.io/{ip_addr}?token={settings.IPINFO_TOKEN}"
         headers = {
             "Content-Type": "application/json",
         }
