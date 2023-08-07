@@ -174,10 +174,13 @@ SIMPLE_JWT = {
 CORS_ALLOW_ALL_ORIGINS = True
 
 # CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS')
-# SECURE_SSL_REDIRECT = \
-#     config('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
-# if SECURE_SSL_REDIRECT:
-#     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_COOKIE_DOMAIN = config('CSRF_COOKIE_DOMAIN')
+SECURE_SSL_REDIRECT = \
+    config('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
+if SECURE_SSL_REDIRECT:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
 # CORS_ALLOWED_ORIGINS = [
 #     "https://6490-102-88-35-217.ngrok-free.app",
 #     "http://localhost:8081",
