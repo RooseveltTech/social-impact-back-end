@@ -51,6 +51,7 @@ class Blog(models.Model):
     blog_body = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     count = models.IntegerField(default=0)
+    image = CloudinaryField('image', default="image/upload/v1677969748/sample.jpg")
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:

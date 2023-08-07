@@ -32,6 +32,7 @@ class BlogSerializer(serializers.ModelSerializer):
             "blog_body",
             "created_at",
             "count",
+            "image",
         )
 
     def to_representation(self, instance):

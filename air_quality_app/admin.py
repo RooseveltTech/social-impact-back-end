@@ -4,34 +4,34 @@ from django.contrib import admin
 # Register your models here.
 
 from import_export.admin import ImportExportModelAdmin
-from air_quality_app.models import AllPlantTable, Blog, Forum, Comment
-from air_quality_app.resources import *
+# from air_quality_app.models import AllPlantTable, Blog, Forum, Comment
+from .resources import *
 
 
 class AllPlantTableResourceAdmin(ImportExportModelAdmin):
-    resource_class = AllPlantTable
-    search_fields = [""]
+    resource_class = AllPlantTableResource
+    # search_fields = [""]
 
     def get_list_display(self, request):
         return [field.name for field in self.model._meta.concrete_fields]
     
 class BlogResourceAdmin(ImportExportModelAdmin):
-    resource_class = Blog
-    search_fields = [""]
+    resource_class = BlogResource
+    # search_fields = [""]
 
     def get_list_display(self, request):
         return [field.name for field in self.model._meta.concrete_fields]
     
 class ForumResourceAdmin(ImportExportModelAdmin):
-    resource_class = Forum
-    search_fields = [""]
+    resource_class = ForumResource
+    # search_fields = [""]
 
     def get_list_display(self, request):
         return [field.name for field in self.model._meta.concrete_fields]
     
 class CommentResourceAdmin(ImportExportModelAdmin):
-    resource_class = Comment
-    search_fields = [""]
+    resource_class = CommentResource
+    # search_fields = [""]
 
     def get_list_display(self, request):
         return [field.name for field in self.model._meta.concrete_fields]
