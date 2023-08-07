@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'core',
-    'import_export',
     'air_quality_app',
+    'core',
     'corsheaders',
+    'rest_framework',
+    'import_export',
     'cloudinary',
 ]
 
@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    # 'config.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -142,6 +143,8 @@ STATIC_URL = "/static/"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
+STATICFILES_DIRS = []
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -170,11 +173,11 @@ SIMPLE_JWT = {
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True
 
-CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS')
-SECURE_SSL_REDIRECT = \
-    config('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
-if SECURE_SSL_REDIRECT:
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS')
+# SECURE_SSL_REDIRECT = \
+#     config('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
+# if SECURE_SSL_REDIRECT:
+#     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # CORS_ALLOWED_ORIGINS = [
 #     "https://6490-102-88-35-217.ngrok-free.app",
 #     "http://localhost:8081",
