@@ -90,12 +90,6 @@ WSGI_APPLICATION = 'social_app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
@@ -103,7 +97,8 @@ DATABASES = {
         "USER": config("DATABASE_USER"),
         "PASSWORD": config("DATABASE_PASSWORD"),
         "HOST": config("DATABASE_HOST"),
-        "PORT": config("DATABASE_PORT")
+        "PORT": config("DATABASE_PORT"),
+        "OPTIONS": {"sslmode": "require"},
     }
 }
 
@@ -172,6 +167,11 @@ SIMPLE_JWT = {
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True
 
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS').split(' ')
+SECURE_SSL_REDIRECT = \
+    config('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
+if SECURE_SSL_REDIRECT:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # CORS_ALLOWED_ORIGINS = [
 #     "https://6490-102-88-35-217.ngrok-free.app",
 #     "http://localhost:8081",
