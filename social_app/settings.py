@@ -173,7 +173,7 @@ SIMPLE_JWT = {
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True
 
-# CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS')
+CSRF_TRUSTED_ORIGINS = ["https://backendgreenair.azurewebsites.net", "http://localhost", "http://127.0.0.1"]
 CSRF_COOKIE_DOMAIN = config('CSRF_COOKIE_DOMAIN')
 SECURE_SSL_REDIRECT = \
     config('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
