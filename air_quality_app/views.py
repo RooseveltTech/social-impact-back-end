@@ -18,7 +18,6 @@ class AirQualityAPIVIew(APIView):
     """Air Quality API View."""
 
     def get(self, request):
-
         # ip_addr = get_ip_address(request)
         # print(ip_addr)
         # city = AirQuality.get_city(ip_addr)
@@ -99,6 +98,7 @@ class AirPlantsAPIVIew(APIView):
             )
        
 class Blogs(APIView):
+    """Blog API View."""
     @swagger_auto_schema(manual_parameters=[ApiParams.page])
     def get(self, request):
         page = request.GET.get("page", 1)
@@ -128,6 +128,7 @@ class Blogs(APIView):
         return Response(data, status=status.HTTP_200_OK)
     
 class SingleBlogAPIView(APIView):
+    """single Blog API View."""
     @swagger_auto_schema(manual_parameters=[ApiParams.blog_id])
     def get(self, request):
         blog_id = request.query_params.get("blog_id")
@@ -165,6 +166,7 @@ class SingleBlogAPIView(APIView):
             )
         
 class LikeBlogAPIView(APIView):
+    """Like Blog API View."""
     @swagger_auto_schema(manual_parameters=[ApiParams.blog_id])
     def get(self, request):
         blog_id = request.query_params.get("blog_id")
@@ -181,6 +183,7 @@ class LikeBlogAPIView(APIView):
            
        
 class CheckUserAPIView(APIView):
+    """Check User API View."""
     permission_classes = [IsAuthenticated]    
     def get(self, request):
         user = request.user

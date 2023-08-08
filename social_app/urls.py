@@ -38,7 +38,6 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=[AllowAny, ],
 )
-
 admin.site.site_header = "Green Air"
 urlpatterns = [
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
@@ -46,5 +45,4 @@ urlpatterns = [
     path('auth/', include('core.urls')),
     path('air/', include('air_quality_app.urls')),
     path("docs/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
-
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
