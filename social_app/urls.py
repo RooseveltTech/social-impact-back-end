@@ -19,11 +19,31 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+
+from rest_framework.permissions import AllowAny
+
+# Swagger-UI.
+schema_view = get_schema_view(
+    openapi.Info(
+        title="MLSA SOCIAL IMPACT - GREEN AIR API ",
+        default_version='v1',
+        description="Django Backend API",
+        terms_of_service="",
+        contact=openapi.Contact(email="rooseveltabandy@gmail.com"),
+        license=openapi.License(name="MIT License"),
+    ),
+    public=True,
+    permission_classes=[AllowAny, ],
+)
 
 admin.site.site_header = "Green Air"
 urlpatterns = [
+    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('admin/', admin.site.urls),
     path('auth/', include('core.urls')),
     path('air/', include('air_quality_app.urls')),
+    path("docs/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -7,8 +7,12 @@ from air_quality_app.apis.call_api import AirQuality
 from air_quality_app.apis.func import CustomPaginator, get_aqi_status, get_ip_address
 from air_quality_app.models import AllPlantTable, Blog
 from air_quality_app.serializers import BlogSerializer, ListPlantsSerializer
-
+from drf_yasg.utils import swagger_auto_schema
+from air_quality_app.api_params import ApiParams
 # Create your views here.
+
+
+
 class AirQualityAPIVIew(APIView):
     permission_classes = [IsAuthenticated]
     """Air Quality API View."""
@@ -55,7 +59,7 @@ class AirQualityAPIVIew(APIView):
 class AirPlantsAPIVIew(APIView):
     permission_classes = [IsAuthenticated]
     """Get Plant details API View."""
-    
+    @swagger_auto_schema(manual_parameters=[ApiParams.plant_id])
     def get(self, request):
         plant_id = request.query_params.get("plant_id")
         try:
@@ -95,6 +99,7 @@ class AirPlantsAPIVIew(APIView):
             )
        
 class Blogs(generics.ListAPIView):
+    @swagger_auto_schema(manual_parameters=[ApiParams.page])
     def get(self, request):
         page = request.GET.get("page", 1)
         blogs = Blog.objects.all().order_by('created_at')
@@ -123,6 +128,7 @@ class Blogs(generics.ListAPIView):
         return Response(data, status=status.HTTP_200_OK)
     
 class SingleBlogAPIView(generics.ListAPIView):
+    @swagger_auto_schema(manual_parameters=[ApiParams.blog_id])
     def get(self, request):
         blog_id = request.query_params.get("blog_id")
         try:
@@ -159,6 +165,7 @@ class SingleBlogAPIView(generics.ListAPIView):
             )
         
 class LikeBlogAPIView(APIView):
+    @swagger_auto_schema(manual_parameters=[ApiParams.blog_id])
     def get(self, request):
         blog_id = request.query_params.get("blog_id")
         try:

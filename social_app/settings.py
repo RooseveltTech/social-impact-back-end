@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'air_quality_app',
     'core',
     'corsheaders',
+    'drf_yasg',
     'rest_framework',
     'import_export',
     'cloudinary',
@@ -122,6 +123,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+## swagger ui
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Basic": {"type": "basic"},
+        "Bearer": {"type": "apiKey", "name": "Authorization", "in": "header"},
+    },
+    "USE_SESSION_AUTH": True,
+    "LOGIN_URL": "admin/",
+    "LOGOUT_URL": "admin/logout/",
+}
+REDOC_SETTINGS = {
+    "LAZY_RENDERING": False,
+    "FETCH_SCHEMA_WITH_QUERY": True,
+    "REQUIRED_PROPS_FIRST": True,
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
