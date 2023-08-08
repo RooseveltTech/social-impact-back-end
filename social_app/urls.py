@@ -34,6 +34,7 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="rooseveltabandy@gmail.com"),
         license=openapi.License(name="MIT License"),
     ),
+    url="https://backendgreenair.azurewebsites.net/",
     public=True,
     permission_classes=[AllowAny, ],
 )

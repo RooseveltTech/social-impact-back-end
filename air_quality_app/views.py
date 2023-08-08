@@ -98,7 +98,7 @@ class AirPlantsAPIVIew(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
        
-class Blogs(generics.ListAPIView):
+class Blogs(APIView):
     @swagger_auto_schema(manual_parameters=[ApiParams.page])
     def get(self, request):
         page = request.GET.get("page", 1)
@@ -127,7 +127,7 @@ class Blogs(generics.ListAPIView):
         print(data)
         return Response(data, status=status.HTTP_200_OK)
     
-class SingleBlogAPIView(generics.ListAPIView):
+class SingleBlogAPIView(APIView):
     @swagger_auto_schema(manual_parameters=[ApiParams.blog_id])
     def get(self, request):
         blog_id = request.query_params.get("blog_id")
