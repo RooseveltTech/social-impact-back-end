@@ -11,11 +11,10 @@ User = get_user_model()
 
 class RegistrationSerializer(serializers.ModelSerializer):
     """Serializers registration requests and creates a new user."""
-    confirm_password = serializers.CharField(max_length=128)
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'phone_number', 'gender','city', 'country_code', 'street', 'country', 'password', 'confirm_password')
+        fields = ('email', 'first_name', 'last_name', 'phone_number', 'gender','city', 'country_code', 'street', 'country', 'password')
         extra_kwargs = {
             'email': {'required': True},
             'first_name': {'required': True, 'allow_null': False},
@@ -29,10 +28,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
             'street': {'required': True, 'allow_null': False},
         }
     def validate(self, value):
-        del value['confirm_password']
         value['password'] = make_password(value['password'])
-
-
         return value
     
 class CustomTokenObtainSerializer(TokenObtainPairSerializer):

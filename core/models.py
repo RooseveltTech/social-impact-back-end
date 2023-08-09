@@ -61,30 +61,24 @@ class User(AbstractUser, BaseModel):
         ("MOBILE", "MOBILE"),
     ]
 
-    GENDER_CHOICES = [
-        ("MALE", "MALE"),
-        ("FEMALE", "FEMALE"),
-        ("OTHER", "OTHER"),
-    ]
     username = None
-    phone_number = models.CharField(max_length=255, blank=False, null=True)
+    phone_number = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(unique=True, )
     first_name = models.CharField(max_length=255, blank=False, null=True)
     last_name = models.CharField(max_length=255, blank=False, null=True)
-    city = models.CharField(max_length=255, blank=False, null=True)
-    street = models.CharField(max_length=255, blank=False, null=True)
+    city = models.CharField(max_length=255, blank=True, null=True)
+    street = models.CharField(max_length=255, blank=True, null=True)
     with open(os.path.dirname(__file__)+'/countries_data.json') as f:
         countries_json = json.load(f)
-        COUNTRIES_ISD_CODES = [(str(country["dialling_code"]), str(country["name"])) for country in countries_json]
+        COUNTRIES_ISD_CODES = [(str(country["name"]), str(country["name"])) for country in countries_json]
         COUNTRIES_PHONE_CODES = [(str(country["name"]), str(country["dialling_code"])) for country in countries_json]
     country = models.CharField(max_length=255,choices=COUNTRIES_ISD_CODES)
-    country_code = models.CharField(max_length=255,choices=COUNTRIES_PHONE_CODES)
-    nearest_landmark = models.CharField(max_length=255, blank=False, null=True)
-    gender = models.CharField(max_length=255, blank=False, null=True)
+    country_code = models.CharField(max_length=255,choices=COUNTRIES_PHONE_CODES, blank=True, null=True)
+    nearest_landmark = models.CharField(max_length=255, blank=True, null=True)
+    gender = models.CharField(max_length=255, blank=True, null=True)
     ip_address = models.CharField(max_length=1000, blank=False, null=True)
     channel = models.CharField(max_length=200, choices=CHANNEL, default="WEB")
     user_is_active = models.BooleanField(default=True)
-    gender = models.CharField(max_length=200, choices=GENDER_CHOICES, default="OTHER", blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
