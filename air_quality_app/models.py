@@ -71,9 +71,6 @@ class Forum(models.Model):
 
     class Meta:
         ordering = ['created_at']
-    
-    def __str__(self):
-        return 'Topic {} by {}'.format(self.forum_body, self.forum_user.username)
 
 class Comment(models.Model):
     blog = models.ForeignKey(Blog,on_delete=models.CASCADE,related_name='blog_comments', blank=True, null=True)

@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from air_quality_app.apis.call_api import AirQuality
 from air_quality_app.apis.func import CustomPaginator, get_aqi_status, get_ip_address
-from air_quality_app.models import AllPlantTable, Blog
-from air_quality_app.serializers import BlogSerializer, ListPlantsSerializer
+from air_quality_app.models import AllPlantTable, Blog, Comment, Forum
+from air_quality_app.serializers import BlogSerializer, ForumCommentSerializer, ForumPostSerializer, ListPlantsSerializer, ViewForumCommentSerializer, ViewForumSerializer
 from drf_yasg.utils import swagger_auto_schema
 from air_quality_app.api_params import ApiParams
 # Create your views here.
@@ -102,7 +102,7 @@ class Blogs(APIView):
     @swagger_auto_schema(manual_parameters=[ApiParams.page])
     def get(self, request):
         page = request.GET.get("page", 1)
-        blogs = Blog.objects.all().order_by('created_at')
+        blogs = Blog.objects.all().order_by('-created_at')
         blog_list = CustomPaginator.paginate(
             request, blogs, page
         )
@@ -124,7 +124,6 @@ class Blogs(APIView):
                 "page_count": len(serializer.data),
                 "total_data_count": 0,
             }
-        print(data)
         return Response(data, status=status.HTTP_200_OK)
     
 class SingleBlogAPIView(APIView):
@@ -188,3 +187,83 @@ class CheckUserAPIView(APIView):
     def get(self, request):
         user = request.user
         return Response({"success":"OK"}, status=status.HTTP_200_OK)
+
+class ForumPostAPIView(APIView):
+    """Check User API View."""
+    permission_classes = [IsAuthenticated]    
+    def post(self, request):
+        user = request.user
+        serializer = ForumPostSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        post = serializer.validated_data.get("post")
+        print(post)
+        Forum.objects.create(
+            forum_user=user,
+            forum_body=post
+        )
+        return Response({"success":"OK"}, status=status.HTTP_200_OK)
+
+class GetAllForumPostAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        page = request.query_params.get("page", 1)
+        forum_post = Forum.objects.all().filter(active=True).order_by('-created_at')
+        forum_list = CustomPaginator.paginate(
+            request, forum_post, page
+        )
+        serializer = ViewForumSerializer(forum_list, many=True)
+        try:
+        
+            data = {
+                "data_type": "Forum",
+                "data": serializer.data,
+                "total_page":  forum_list.paginator.num_pages,
+                "page_count": len(serializer.data),
+                "total_data_count":  forum_list.paginator.count,
+            }
+        except AttributeError:
+            data = {
+                "data_type": "Forum",
+                "data": [],
+                "total_page": 0,
+                "page_count": len(serializer.data),
+                "total_data_count": 0,
+            }
+        return Response(data, status=status.HTTP_200_OK)
+
+class ForumCommentAPIView(APIView):
+    """Check User API View."""
+    permission_classes = [IsAuthenticated]    
+    def post(self, request):
+        user = request.user
+        serializer = ForumCommentSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        comment = serializer.validated_data.get("comment")
+        forum_id = serializer.validated_data.get("forum_id")
+        get_forum = Forum.objects.filter(id=forum_id).first()
+        if get_forum:
+            Comment.objects.create(
+                forum=get_forum,
+                user=user,
+                body=comment
+            )
+        return Response({"success":"OK"}, status=status.HTTP_200_OK)
+
+class GetAllForumCommentAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        forum_id = request.query_params.get('forum_id')
+        forum = Forum.objects.filter(id=forum_id).first()
+        forum_comment = Comment.objects.filter(forum=forum).order_by('-created_at')
+        serializer = ViewForumCommentSerializer(forum_comment, many=True)
+        try:
+            data = {
+                "data_type": "Forum Comment",
+                "data": serializer.data,
+            }
+        except AttributeError:
+            data = {
+                "data_type": "Forum Comment",
+                "data": [],
+            }
+        return Response(data, status=status.HTTP_200_OK)

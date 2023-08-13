@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from air_quality_app.models import AllPlantTable, Blog
+from air_quality_app.models import AllPlantTable, Blog, Comment, Forum
 
 
 class ListPlantsSerializer(serializers.ModelSerializer):
@@ -42,7 +42,43 @@ class BlogSerializer(serializers.ModelSerializer):
 
         return serialized_data
 
+class ForumPostSerializer(serializers.Serializer):
+    post = serializers.CharField(required=True)
 
-    
-    
+class ViewForumSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Forum
+        fields = (
+            "id",
+            "forum_user",
+            "forum_body",
+            "created_at",
+        )
 
+    def to_representation(self, instance):
+        serialized_data = super().to_representation(instance)
+        serialized_data["first_name"] = instance.forum_user.first_name
+        serialized_data["last_name"] = instance.forum_user.last_name
+
+        return serialized_data
+
+class ForumCommentSerializer(serializers.Serializer):
+    comment = serializers.CharField(required=True)
+    forum_id = serializers.CharField(required=True)
+
+class ViewForumCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = (
+            "id",
+            "user",
+            "body",
+            "created_at",
+        )
+
+    def to_representation(self, instance):
+        serialized_data = super().to_representation(instance)
+        serialized_data["first_name"] = instance.user.first_name
+        serialized_data["last_name"] = instance.user.last_name
+
+        return serialized_data
