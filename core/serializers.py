@@ -14,18 +14,18 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'phone_number', 'gender','city', 'country_code', 'street', 'country', 'password')
+        fields = ('email', 'first_name', 'last_name', 'phone_number', 'city', 'country_code', 'street', 'country', 'password')
         extra_kwargs = {
             'email': {'required': True},
             'first_name': {'required': True, 'allow_null': False},
             'last_name': {'required': True, 'allow_null': False},
-            'country_code': {'required': True, 'allow_null': False},
-            'phone_number': {'required': True, 'allow_null': False},
+            'country_code': {'required': False, 'allow_null': False},
+            'phone_number': {'required': False, 'allow_null': False},
             'city': {'required': True, 'allow_null': False},
-            'street': {'required': True, 'allow_null': False},
+            'street': {'required': False, 'allow_null': False},
             'country': {'required': True, 'allow_null': False},
             'password': {'write_only': True, 'allow_null': False},
-            'street': {'required': True, 'allow_null': False},
+            'street': {'required': False, 'allow_null': False},
         }
     def validate(self, value):
         value['password'] = make_password(value['password'])
