@@ -252,9 +252,7 @@ class ForumCommentAPIView(APIView):
 class GetAllForumCommentAPIView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
-        forum_id = request.query_params.get('forum_id')
-        forum = Forum.objects.filter(id=forum_id).first()
-        forum_comment = Comment.objects.filter(forum=forum).order_by('-created_at')
+        forum_comment = Comment.objects.all().filter(forum__isnull=False).order_by('-created_at')
         serializer = ViewForumCommentSerializer(forum_comment, many=True)
         try:
             data = {

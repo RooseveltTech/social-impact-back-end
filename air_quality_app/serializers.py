@@ -72,6 +72,8 @@ class ViewForumCommentSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "user",
+            "blog",
+            "forum",
             "body",
             "created_at",
         )
@@ -80,5 +82,6 @@ class ViewForumCommentSerializer(serializers.ModelSerializer):
         serialized_data = super().to_representation(instance)
         serialized_data["first_name"] = instance.user.first_name
         serialized_data["last_name"] = instance.user.last_name
+        serialized_data["forum_id"] = instance.forum.id
 
         return serialized_data

@@ -90,8 +90,8 @@ class User(AbstractUser, BaseModel):
 
     class Meta:
         ordering = ['-created_at']
-        verbose_name = 'USER PROFILE'
-        verbose_name_plural = 'USER PROFILES'
+        # verbose_name = 'USER PROFILE'
+        # verbose_name_plural = 'USER PROFILES'
 
     @property
     def full_name(self) -> str:
