@@ -75,8 +75,6 @@ class User(AbstractUser, BaseModel):
     country = models.CharField(max_length=255,choices=COUNTRIES_ISD_CODES)
     country_code = models.CharField(max_length=255,choices=COUNTRIES_PHONE_CODES, blank=True, null=True)
     nearest_landmark = models.CharField(max_length=255, blank=True, null=True)
-    # gender = models.CharField(max_length=255, blank=True, null=True)
-    ip_address = models.CharField(max_length=1000, blank=False, null=True)
     channel = models.CharField(max_length=200, choices=CHANNEL, default="WEB")
     user_is_active = models.BooleanField(default=True)
 
