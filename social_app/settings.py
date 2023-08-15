@@ -187,7 +187,7 @@ REDIS_PASS=config("REDIS_PASS")
 REDIS_HOST_PORT_URL=config("REDIS_HOST_PORT_URL")
 _broker_url = f'rediss://:{REDIS_PASS}@{REDIS_HOST_PORT_URL}'
 BROKER_URL = _broker_url
-CELERY_RESULT_BACKEND = _broker_url
+CELERY_RESULT_BACKEND = 'django://'
 BROKER_USE_SSL={'ssl_cert_reqs': ssl.CERT_REQUIRED}
 CELERY_REDIS_BACKEND_USE_SSL={'ssl_cert_reqs': ssl.CERT_REQUIRED}
 REDIS_PASS=config("REDIS_PASS")
@@ -196,7 +196,7 @@ REDIS_PASS=config("REDIS_PASS")
 CACHES = {
         "default": {  
             "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": f"rediss://:{REDIS_PASS}@backendgreenair-cache.redis.cache.windows.net:6380/0",
+            "LOCATION": f"rediss://:{REDIS_PASS}@{REDIS_HOST_PORT_URL}",
             "OPTIONS": {
                 'CLIENT_CLASS': 'django_redis.client.DefaultClient',
                 'PASSWORD': REDIS_PASS,
