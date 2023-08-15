@@ -191,7 +191,7 @@ CELERY_RESULT_BACKEND = _broker_url
 BROKER_USE_SSL={'ssl_cert_reqs': ssl.CERT_NONE}
 CELERY_REDIS_BACKEND_USE_SSL={'ssl_cert_reqs': ssl.CERT_NONE}
 
-
+REDIS_PASS=config("REDIS_PASS")
 ENVIRONMENT="developments"
 
 SIMPLE_JWT = {
