@@ -143,7 +143,7 @@ class SingleBlogAPIView(APIView):
                         "last_name": single_blog.blog_user.last_name,
                         "count": single_blog.count,
                         "blog_body": single_blog.blog_body,
-                        "image": f"https://res.cloudinary.com/dqjmovcjo/",
+                        "image": f"https://res.cloudinary.com/dqjmovcjo/{single_blog.image}",
                         "created_at": single_blog.created_at
                 },
                 status=status.HTTP_200_OK)
