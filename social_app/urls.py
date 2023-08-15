@@ -44,5 +44,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('core.urls')),
     path('air/', include('air_quality_app.urls')),
+    path('tinymce/', include('tinymce.urls')),
     path("docs/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

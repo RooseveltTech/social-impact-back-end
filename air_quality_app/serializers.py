@@ -39,7 +39,8 @@ class BlogSerializer(serializers.ModelSerializer):
         serialized_data = super().to_representation(instance)
         serialized_data["first_name"] = instance.blog_user.first_name
         serialized_data["last_name"] = instance.blog_user.last_name
-
+        image = f"https://res.cloudinary.com/dqjmovcjo/{serialized_data['image']}" if serialized_data['image'] is not None else None
+        serialized_data["image"] =  image
         return serialized_data
 
 class ForumPostSerializer(serializers.Serializer):

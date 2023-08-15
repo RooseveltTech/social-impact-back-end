@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'import_export',
     'cloudinary',
+    'tinymce',
 ]
 
 MIDDLEWARE = [

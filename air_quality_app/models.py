@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from cloudinary.models import CloudinaryField
+from tinymce.models import HTMLField
 User = get_user_model()
 
 # Create your models here.
@@ -48,7 +49,7 @@ class Blog(models.Model):
 
     blog_title = models.CharField(max_length=500, blank=True, null=True)
     blog_user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    blog_body = models.TextField()
+    blog_body = HTMLField()
     created_at = models.DateTimeField(auto_now_add=True)
     count = models.IntegerField(default=0)
     image = CloudinaryField('image', default="image/upload/v1677969748/sample.jpg")
@@ -58,7 +59,7 @@ class Blog(models.Model):
         ordering = ['created_at']
     
     def __str__(self):
-        return 'Blog {} by {}'.format(self.blog_body, self.blog_user.username)
+        return f'Blog {self.blog_title} by {self.blog_user}'
     
 class Forum(models.Model):
 
