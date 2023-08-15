@@ -193,17 +193,17 @@ CELERY_REDIS_BACKEND_USE_SSL={'ssl_cert_reqs': ssl.CERT_REQUIRED}
 REDIS_PASS=config("REDIS_PASS")
 
 
-CACHES = {
-        "default": {  
-            "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": f"rediss://:{REDIS_PASS}@{REDIS_HOST_PORT_URL}",
-            "OPTIONS": {
-                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-                'PASSWORD': REDIS_PASS,
-                'SSL': True
-            },
-        }
-    }
+# CACHES = {
+#         "default": {  
+#             "BACKEND": "django_redis.cache.RedisCache",
+#             "LOCATION": f"rediss://:{REDIS_PASS}@{REDIS_HOST_PORT_URL}",
+#             "OPTIONS": {
+#                 'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#                 'PASSWORD': REDIS_PASS,
+#                 'SSL': True
+#             },
+#         }
+#     }
 
 # CELERY_BROKER_URL = f'rediss://:{REDIS_PASS}@{REDIS_HOST_PORT_URL}'
 # CELERY_ACCEPT_CONTENT = ["application/json"]
