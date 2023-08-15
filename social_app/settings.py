@@ -183,15 +183,23 @@ REST_FRAMEWORK = {
 }
 
 # CELERY
-REDIS_PASS=config("REDIS_PASS")
-REDIS_HOST_PORT_URL=config("REDIS_HOST_PORT_URL")
-_broker_url = f'rediss://:{REDIS_PASS}@{REDIS_HOST_PORT_URL}'
-BROKER_URL = _broker_url
-CELERY_RESULT_BACKEND = _broker_url
-BROKER_USE_SSL={'ssl_cert_reqs': ssl.CERT_NONE}
-CELERY_REDIS_BACKEND_USE_SSL={'ssl_cert_reqs': ssl.CERT_NONE}
+# REDIS_PASS=config("REDIS_PASS")
+# REDIS_HOST_PORT_URL=config("REDIS_HOST_PORT_URL")
+# _broker_url = f'rediss://:{REDIS_PASS}@{REDIS_HOST_PORT_URL}'
+# BROKER_URL = _broker_url
+# CELERY_RESULT_BACKEND = _broker_url
+# print(CELERY_RESULT_BACKEND)
+# BROKER_USE_SSL={'ssl_cert_reqs': ssl.CERT_NONE}
+# CELERY_REDIS_BACKEND_USE_SSL={'ssl_cert_reqs': ssl.CERT_NONE}
+# REDIS_PASS=config("REDIS_PASS")
 
-REDIS_PASS=config("REDIS_PASS")
+CELERY_BROKER_URL = "redis://127.0.0.1:6379"
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_RESULT_BACKEND = "django-db"
+
 ENVIRONMENT="developments"
 
 SIMPLE_JWT = {
