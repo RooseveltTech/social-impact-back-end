@@ -15,7 +15,7 @@ from datetime import timedelta
 
 from decouple import Csv, config
 from django.core.management.utils import get_random_secret_key
-
+import ssl
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -183,12 +183,14 @@ REST_FRAMEWORK = {
 }
 
 # CELERY
-CELERY_BROKER_URL = config("CELERY_BROKER_URL")
-CELERY_ACCEPT_CONTENT = ["application/json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
-CELERY_TIMEZONE = TIME_ZONE
-CELERY_RESULT_BACKEND = "django-db"
+REDIS_PASS=config("REDIS_PASS")
+REDIS_HOST_PORT_URL=config("REDIS_HOST_PORT_URL")
+_broker_url = f'rediss://:{REDIS_PASS}@{REDIS_HOST_PORT_URL}'
+BROKER_URL = _broker_url
+CELERY_RESULT_BACKEND = _broker_url
+BROKER_USE_SSL={'ssl_cert_reqs': ssl.CERT_NONE}
+CELERY_REDIS_BACKEND_USE_SSL={'ssl_cert_reqs': ssl.CERT_NONE}
+
 
 ENVIRONMENT="developments"
 
