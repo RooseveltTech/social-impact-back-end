@@ -63,6 +63,8 @@ class User(AbstractUser, BaseModel):
 
     username = None
     phone_number = models.CharField(max_length=255, blank=True, null=True)
+    air_city = models.CharField(max_length=255, blank=True, null=True)
+    ip_address = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(unique=True, )
     first_name = models.CharField(max_length=255, blank=False, null=True)
     last_name = models.CharField(max_length=255, blank=False, null=True)

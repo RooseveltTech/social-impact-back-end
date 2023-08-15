@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'import_export',
+    'django_celery_results',
+    'django_celery_beat',
     'cloudinary',
     'tinymce',
 ]
@@ -179,6 +181,14 @@ REST_FRAMEWORK = {
     ),
 
 }
+
+# CELERY
+CELERY_BROKER_URL = "redis://127.0.0.1:6379"
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_RESULT_BACKEND = "django-db"
 
 ENVIRONMENT="developments"
 

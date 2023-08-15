@@ -18,11 +18,13 @@ class AirQualityAPIVIew(APIView):
     """Air Quality API View."""
 
     def get(self, request):
-        # ip_addr = get_ip_address(request)
-        # print(ip_addr)
-        # city = AirQuality.get_city(ip_addr)
+        ip_addr = get_ip_address(request)   
+        user = request.user
+        user.ip_address = ip_addr
+        user.save()
+        
         # print(city)
-        city = "Lagos"
+        city = request.user.air_city
 
         all_plants = AllPlantTable.objects.all()  
         serializer = ListPlantsSerializer(all_plants, many=True)
@@ -192,7 +194,11 @@ class ForumPostAPIView(APIView):
     """Check User API View."""
     permission_classes = [IsAuthenticated]    
     def post(self, request):
+        ip_addr = get_ip_address(request)   
         user = request.user
+        user.ip_address = ip_addr
+        user.save()
+
         serializer = ForumPostSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         post = serializer.validated_data.get("post")
