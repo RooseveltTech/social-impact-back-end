@@ -192,6 +192,13 @@ BROKER_USE_SSL={'ssl_cert_reqs': ssl.CERT_REQUIRED}
 CELERY_REDIS_BACKEND_USE_SSL={'ssl_cert_reqs': ssl.CERT_REQUIRED}
 REDIS_PASS=config("REDIS_PASS")
 
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = TIME_ZONE
+
+# CELERY BEAT
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 # CACHES = {
 #         "default": {  
