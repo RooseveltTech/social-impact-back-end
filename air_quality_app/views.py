@@ -50,7 +50,12 @@ class AirQualityAPIVIew(APIView):
         else:
             return Response(
                 {
-                    "air_quality": response,
+                    "aqi": 0,
+                    "idx": 0,
+                    "city": city,
+                    "aqi_status": 0, 
+                    "aqi_color": "bg-success",
+                    "aqi_message": "not available",
                     "all_plants": serializer.data,
                 },
                 status=status.HTTP_200_OK

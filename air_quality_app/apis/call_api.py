@@ -14,17 +14,48 @@ class AirQuality:
         }
         """Get air quality data."""
         response = requests.request("GET", url, headers=headers)
-        if "status"in response.json().keys():
+        if "status" in response.json().keys():
             if response.json().get("status") == "ok":
                 data = response.json()
             else:
-                data = {
+                url = f"http://api.waqi.info/feed/here/?token={settings.AQI_TOKEN}"
+                headers = {
+                    "Content-Type": "application/json",
+                }
+                """Get air quality data."""
+                response = requests.request("GET", url, headers=headers)
+                if "status" in response.json().keys():
+                    if response.json().get("status") == "ok":
+                        data = response.json()
+                    else:
+                        data = {
+                            "status": "error",
+                            "data": {
+                                "aqi": 0,
+                                "idx": 0,
+                                "city": {"name":city}
+                            },
+                            "message": "location not found"
+                        }
+                else:
+                    data = {
                     "status": "error",
+                    "data": {
+                        "aqi": 0,
+                        "idx": 0,
+                        "city": {"name":city}
+                    },
+
                     "message": "location not found"
                 }
         else:
             data = {
                 "status": "error",
+                "data": {
+                    "aqi": 0,
+                    "idx": 0,
+                    "city": {"name":city}
+                },
                 "message": "location not found"
             }
         return data
