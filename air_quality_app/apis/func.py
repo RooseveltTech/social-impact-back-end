@@ -1,15 +1,5 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
-def get_ip_address(request):
-    # Get IP ADDRESS
-    address = request.META.get('HTTP_X_FORWARDED_FOR')
-    if address:
-        ip_addr = address.split(',')[-1].strip()
-    else:
-        ip_addr = request.META.get('REMOTE_ADDR')
-    
-    return ip_addr
-
 def get_aqi_status(aqi):
     if aqi <= 50:
         return "Good", "bg-success", "Air quality is considered satisfactory, and air pollution poses little or no risk"

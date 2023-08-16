@@ -7,7 +7,6 @@ from django.shortcuts import render
 from django.template import loader
 from django.contrib.auth import get_user_model
 from air_quality_app.apis.call_api import AirQuality
-from air_quality_app.apis.func import get_ip_address
 
 from core.serializers import RegistrationSerializer
 
@@ -24,12 +23,9 @@ class RegistrationAPIView(APIView):
     @swagger_auto_schema(request_body=RegistrationSerializer)
     def post(self, request):
         """Handle HTTP POST request."""
-        ip_addr = get_ip_address(request)
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        city = AirQuality.get_city(ip_addr)
-        serializer.validated_data['ip_address'] = ip_addr
-        serializer.validated_data['air_city'] = city
+
         serializer.save()
         return Response(
             serializer.data,

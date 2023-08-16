@@ -4,7 +4,7 @@ from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from air_quality_app.apis.call_api import AirQuality
-from air_quality_app.apis.func import CustomPaginator, get_aqi_status, get_ip_address
+from air_quality_app.apis.func import CustomPaginator, get_aqi_status
 from air_quality_app.models import AllPlantTable, Blog, Comment, Forum
 from air_quality_app.serializers import BlogSerializer, ForumCommentSerializer, ForumPostSerializer, ListPlantsSerializer, ViewForumCommentSerializer, ViewForumSerializer
 from drf_yasg.utils import swagger_auto_schema
@@ -17,13 +17,8 @@ class AirQualityAPIVIew(APIView):
     permission_classes = [IsAuthenticated]
     """Air Quality API View."""
 
-    def get(self, request):
-        ip_addr = get_ip_address(request)   
-        user = request.user
-        user.ip_address = ip_addr
-        user.save()
-        
-        # print(city)
+    def get(self, request):  
+      
         city = request.user.air_city
 
         all_plants = AllPlantTable.objects.all()  
@@ -198,11 +193,8 @@ class CheckUserAPIView(APIView):
 class ForumPostAPIView(APIView):
     """Check User API View."""
     permission_classes = [IsAuthenticated]    
-    def post(self, request):
-        ip_addr = get_ip_address(request)   
+    def post(self, request):  
         user = request.user
-        user.ip_address = ip_addr
-        user.save()
 
         serializer = ForumPostSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -276,3 +268,13 @@ class GetAllForumCommentAPIView(APIView):
                 "data": [],
             }
         return Response(data, status=status.HTTP_200_OK)
+    
+
+class GetIpAddressAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        ip_address = request.GET.get('ip_address')
+        user = request.user
+        user.ip_address = ip_address
+        user.save()
+        return Response({"success":"OK"}, status=status.HTTP_200_OK)
