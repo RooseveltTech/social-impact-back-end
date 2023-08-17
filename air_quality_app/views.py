@@ -18,8 +18,10 @@ class AirQualityAPIVIew(APIView):
     """Air Quality API View."""
 
     def get(self, request):  
-      
-        city = request.user.air_city
+        if request.user.air_city:
+            city = request.user.air_city
+        else:
+            city = AirQuality.get_city(request.user.ip_address)
 
         all_plants = AllPlantTable.objects.all()  
         serializer = ListPlantsSerializer(all_plants, many=True)
