@@ -86,3 +86,6 @@ class ViewForumCommentSerializer(serializers.ModelSerializer):
         serialized_data["forum_id"] = instance.forum.id
 
         return serialized_data
+    
+class AISerializer(serializers.Serializer):
+    image = serializers.FileField(required=True, allow_null=False)

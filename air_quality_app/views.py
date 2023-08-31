@@ -6,9 +6,10 @@ from rest_framework.permissions import IsAuthenticated
 from air_quality_app.apis.call_api import AirQuality
 from air_quality_app.apis.func import CustomPaginator, get_aqi_status
 from air_quality_app.models import AllPlantTable, Blog, Comment, Forum
-from air_quality_app.serializers import BlogSerializer, ForumCommentSerializer, ForumPostSerializer, ListPlantsSerializer, ViewForumCommentSerializer, ViewForumSerializer
+from air_quality_app.serializers import AISerializer, BlogSerializer, ForumCommentSerializer, ForumPostSerializer, ListPlantsSerializer, ViewForumCommentSerializer, ViewForumSerializer
 from drf_yasg.utils import swagger_auto_schema
 from air_quality_app.api_params import ApiParams
+from image_classification_app.image_processor import image_result
 # Create your views here.
 
 
@@ -280,3 +281,15 @@ class GetIpAddressAPIView(APIView):
         user.ip_address = ip_address
         user.save()
         return Response({"success":"OK"}, status=status.HTTP_200_OK)
+
+
+class PredictImageView(APIView):
+    def post(self, request):
+        serializer = AISerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        image = serializer.validated_data.get("image")
+        image_id = image_result(image)
+        response = { }
+        for i in range(0, len(image_id)):
+            response.update({f"plant_{i+1}": image_id[i]})
+        return Response(response, status=status.HTTP_200_OK)

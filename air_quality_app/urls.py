@@ -13,6 +13,7 @@ air_quality = [
     path('v1/forum_comment/', views.ForumCommentAPIView.as_view(), name=''),
     path('v1/get_forum_comment/', views.GetAllForumCommentAPIView.as_view(), name=''),
     path('v1/get_ip_address/', views.GetIpAddressAPIView.as_view(), name=''),
+    path('v1/image/', views.PredictImageView.as_view(), name=''),
 ]
 
 urlpatterns = [
