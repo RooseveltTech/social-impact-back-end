@@ -9,7 +9,7 @@ from air_quality_app.models import AllPlantTable, Blog, Comment, Forum
 from air_quality_app.serializers import AISerializer, BlogSerializer, ForumCommentSerializer, ForumPostSerializer, ListPlantsSerializer, ViewForumCommentSerializer, ViewForumSerializer
 from drf_yasg.utils import swagger_auto_schema
 from air_quality_app.api_params import ApiParams
-from image_classification_app.image_processor import image_result
+from air_quality_app.image_processor import image_result
 # Create your views here.
 
 

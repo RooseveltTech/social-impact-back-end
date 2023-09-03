@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'air_quality_app',
     'core',
-    'image_classification_app',
     'corsheaders',
     'drf_yasg',
     'rest_framework',
